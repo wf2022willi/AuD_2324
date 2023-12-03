@@ -3,6 +3,7 @@ public class Point { //Aufgabe3
     private int x;
 
     private int y;
+    //x,y sind ausschliesslich Gitter Kordinaten!!!
 
 
     public Point (int x, int y) {
