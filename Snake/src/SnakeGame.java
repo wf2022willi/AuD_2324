@@ -5,6 +5,12 @@ public class SnakeGame extends AudGameWindow{
     private int width;
     private int height;
     public static final int SQUARE_SIZE = 16;
+    public static final int STEP_TIME = 100;
+    private Snake snake;
+    private long lastSnakeUpdate;
+
+
+
 
     //stanrad Konstruktor 1d)
     public SnakeGame() {
@@ -13,6 +19,31 @@ public class SnakeGame extends AudGameWindow{
         setTitle("AuD-Snake - Score:"+score);
         width = getGameAreaWidth() / SQUARE_SIZE ;
         height = getGameAreaHeight() / SQUARE_SIZE;
+        int areaWidth = getGameAreaHeight();
+        int areaHeight = getGameAreaHeight();
+        snake = new Snake(areaWidth/2 - SQUARE_SIZE,areaHeight/2 - SQUARE_SIZE,5);
+        lastSnakeUpdate = System.currentTimeMillis();// zeitpunkt letzte Update
+    }
+
+    public void updateGame(long time) {
+        long runtime = time - lastSnakeUpdate;
+        int steps = (int) (runtime / STEP_TIME);
+        for (int i = 0; i < steps; i++) {
+            snake.step();
+        }
+        lastSnakeUpdate += steps * STEP_TIME;
+
+
+    }
+
+    @Override
+    public void paintGame(AudGraphics g) {
+        int areaWidth = getGameAreaWidth();
+        int areaHeight = getGameAreaHeight();
+        g.drawRect(0,0,areaWidth,areaHeight);
+        g.fillRect(0,0,areaWidth,areaHeight);
+        snake.paint(g);
+
     }
 
     public SnakeGame(int timerInterval) {
@@ -69,19 +100,10 @@ public class SnakeGame extends AudGameWindow{
         return super.getStartTime();
     }
 
-    @Override
-    public void updateGame(long time) {
 
-    }
 
-    @Override
-    public void paintGame(AudGraphics g) {
-        int areaWidth = getGameAreaWidth();
-        int areaHeight = getGameAreaHeight();
-        g.drawRect(0,0,areaWidth,areaHeight);
-        g.fillRect(0,0,areaWidth,areaHeight);
 
-    }
+
 
     @Override
     public void handleInput(int keyCode) {

@@ -11,6 +11,7 @@ public class Point { //Aufgabe3
         this.y = y;
     }
 
+
     public int getX() {
         return x;
     }
